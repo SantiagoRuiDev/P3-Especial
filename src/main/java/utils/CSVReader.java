@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CSVReader {
-    public static List<Camion> obtenerInformacionCamiones() {
-        InputStream ruta = CSVReader.class.getResourceAsStream("/camiones.csv");
+    public static List<Camion> obtenerInformacionCamiones(String path) {
+        InputStream ruta = CSVReader.class.getResourceAsStream(path);
 
         if (ruta == null) {
             System.err.println("No se encontró el archivo CSV.");
@@ -53,8 +53,8 @@ public class CSVReader {
     }
 
     // Funciona igual a la función anterior, solo cambia la cantidad de elementos dentro de cada registro (row)
-    public static List<Paquete> obtenerInformacionPaquetes() {
-        InputStream ruta = CSVReader.class.getResourceAsStream("/paquetes.csv");
+    public static List<Paquete> obtenerInformacionPaquetes(String path) {
+        InputStream ruta = CSVReader.class.getResourceAsStream(path);
 
         if (ruta == null) {
             System.err.println("No se encontró el archivo CSV de paquetes.");
