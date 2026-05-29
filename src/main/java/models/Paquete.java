@@ -1,14 +1,31 @@
 package models;
 
-// Clase reservada para representar a los paquetes (Leidos desde el CSV)
+/**
+ * Representa un paquete leído desde un archivo CSV.
+ */
 public class Paquete {
-    private String idPaquete;
+
+    private int idPaquete;
     private String codigoPaquete;
     private int pesoKg;
     private boolean contieneAlimentos;
     private int nivelUrgencia;
 
-    public Paquete(String idPaquete, String codigoPaquete, int pesoKg, boolean contieneAlimentos, int nivelUrgencia) {
+    /**
+     * Crea un paquete con sus datos básicos.
+     *
+     * @param idPaquete identificador único del paquete
+     * @param codigoPaquete código identificador del paquete
+     * @param pesoKg peso del paquete en kilogramos
+     * @param contieneAlimentos indica si el paquete contiene alimentos
+     * @param nivelUrgencia nivel de urgencia entre 1 y 100
+     */
+    public Paquete(int idPaquete,
+                   String codigoPaquete,
+                   int pesoKg,
+                   boolean contieneAlimentos,
+                   int nivelUrgencia) {
+
         this.idPaquete = idPaquete;
         this.codigoPaquete = codigoPaquete;
         this.pesoKg = pesoKg;
@@ -16,43 +33,49 @@ public class Paquete {
         this.nivelUrgencia = nivelUrgencia;
     }
 
-    public String getIdPaquete() {
+    /**
+     * Retorna el ID del paquete.
+     */
+    public int getIdPaquete() {
         return idPaquete;
     }
 
-    public void setIdPaquete(String idPaquete) {
-        this.idPaquete = idPaquete;
-    }
-
+    /**
+     * Retorna el código identificador del paquete.
+     */
     public String getCodigoPaquete() {
         return codigoPaquete;
     }
 
-    public void setCodigoPaquete(String codigoPaquete) {
-        this.codigoPaquete = codigoPaquete;
-    }
-
+    /**
+     * Retorna el peso del paquete en kilogramos.
+     */
     public int getPesoKg() {
         return pesoKg;
     }
 
-    public void setPesoKg(int pesoKg) {
-        this.pesoKg = pesoKg;
-    }
-
+    /**
+     * Indica si el paquete contiene alimentos.
+     */
     public boolean isContieneAlimentos() {
         return contieneAlimentos;
     }
 
-    public void setContieneAlimentos(boolean contieneAlimentos) {
-        this.contieneAlimentos = contieneAlimentos;
-    }
-
+    /**
+     * Retorna el nivel de urgencia del paquete.
+     */
     public int getNivelUrgencia() {
         return nivelUrgencia;
     }
 
-    public void setNivelUrgencia(int nivelUrgencia) {
-        this.nivelUrgencia = nivelUrgencia;
+    @Override
+    public String toString() {
+        return "Paquete{" +
+                "idPaquete=" + idPaquete +
+                ", codigoPaquete='" + codigoPaquete + '\'' +
+                ", pesoKg=" + pesoKg +
+                ", contieneAlimentos=" + contieneAlimentos +
+                ", nivelUrgencia=" + nivelUrgencia +
+                '}';
     }
 }

@@ -1,22 +1,37 @@
 package utils;
 
-import models.Camion;
-import models.Paquete;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
+import models.*;
 
+import org.apache.commons.csv.*;
+
+import java.io.*;
+import java.util.*;
+
+/**
+ * Clase utilitaria encargada de leer archivos CSV de camiones y paquetes.
+ */
 public class CSVReader {
+
+    /**
+     * Evita instanciación de la clase.
+     */
+    private CSVReader() {
+    }
+
+    /**
+     * Obtiene la lista de camiones desde un archivo CSV.
+     *
+     * @param path ruta del archivo CSV
+     * @return lista de camiones leídos
+     */
     public static List<Camion> obtenerInformacionCamiones(String path) {
+        List<Camion> camiones = new ArrayList<>();
+
         InputStream ruta = CSVReader.class.getResourceAsStream(path);
 
         if (ruta == null) {
-            System.err.println("No se encontró el archivo CSV.");
-            return null;
+            System.err.println("No se encontró el archivo CSV de camiones.");
+            return camiones;
         }
 
         try (
@@ -25,40 +40,59 @@ public class CSVReader {
                         .build()
                         .parse(new InputStreamReader(ruta))
         ) {
-            List<Camion> camiones = new ArrayList<>();
+
+            boolean primeraFila = true;
 
             for (CSVRecord row : parser) {
+                // La primera fila contiene la cantidad total de registros
+                if (primeraFila) {
+                    primeraFila = false;
+                    continue;
+                }
+
                 // Si la linea no tiene 4 campos separados por ;  la evitamos. (La primera fila siempre representa la totalidad de registros)
                 if (row.size() < 4) {
                     continue;
                 }
 
-                String idCamion = row.get(0); // Obtenemos el ID
-                String patente = row.get(1);  // Obtenemos la patente.
-
+                int idCamion = Integer.parseInt(row.get(0)); // Obtenemos el ID.
+                String patente = row.get(1); // Obtenemos la patente.
                 // Transformamos el string en booleano.
                 boolean estaRefrigerado = "1".equals(row.get(2));
 
                 int capacidadKg = Integer.parseInt(row.get(3));
 
-                Camion cc = new Camion(idCamion, patente, estaRefrigerado, capacidadKg);
-                camiones.add(cc);
+                Camion camion = new Camion(
+                        idCamion,
+                        patente,
+                        estaRefrigerado,
+                        capacidadKg
+                );
+
+                camiones.add(camion);
             }
-            return camiones;
 
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
+
+        return camiones;
     }
 
-    // Funciona igual a la función anterior, solo cambia la cantidad de elementos dentro de cada registro (row)
+    /**
+     * Obtiene la lista de paquetes desde un archivo CSV.
+     *
+     * @param path ruta del archivo CSV
+     * @return lista de paquetes leídos
+     */
     public static List<Paquete> obtenerInformacionPaquetes(String path) {
+        List<Paquete> paquetes = new ArrayList<>();
+
         InputStream ruta = CSVReader.class.getResourceAsStream(path);
 
         if (ruta == null) {
             System.err.println("No se encontró el archivo CSV de paquetes.");
-            return null;
+            return paquetes;
         }
 
         try (
@@ -67,29 +101,40 @@ public class CSVReader {
                         .build()
                         .parse(new InputStreamReader(ruta))
         ) {
-            List<Paquete> paquetes = new ArrayList<>();
+
+            boolean primeraFila = true;
 
             for (CSVRecord row : parser) {
+                if (primeraFila) {
+                    primeraFila = false;
+                    continue;
+                }
+
                 if (row.size() < 5) {
                     continue;
                 }
 
-                String idPaquete = row.get(0);
+                int idPaquete = Integer.parseInt(row.get(0));
                 String codigoPaquete = row.get(1);
                 int pesoKg = Integer.parseInt(row.get(2));
-
                 boolean contieneAlimentos = "1".equals(row.get(3));
-
                 int nivelUrgencia = Integer.parseInt(row.get(4));
 
-                Paquete nuevoPaquete = new Paquete(idPaquete, codigoPaquete, pesoKg, contieneAlimentos, nivelUrgencia);
-                paquetes.add(nuevoPaquete);
+                Paquete paquete = new Paquete(
+                        idPaquete,
+                        codigoPaquete,
+                        pesoKg,
+                        contieneAlimentos,
+                        nivelUrgencia
+                );
+
+                paquetes.add(paquete);
             }
-            return paquetes;
 
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
+
+        return paquetes;
     }
 }
