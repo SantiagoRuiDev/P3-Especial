@@ -1,5 +1,7 @@
 import models.Paquete;
+import utils.ResultadoGreedy;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class Test {
@@ -47,5 +49,15 @@ public class Test {
 
         for (Paquete pk : paquetesUrgentes)
             System.out.println(pk);
+
+        /*
+         * TEST GREEDY
+         * Asignar paquetes a camiones mediante estrategia Greedy
+         */
+        System.out.println("\nGREEDY");
+
+        ResultadoGreedy greedy = servicios.greedy();
+
+        System.out.println(greedy);
     }
 }
