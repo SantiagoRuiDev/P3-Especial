@@ -56,8 +56,18 @@ public class Test {
          */
         System.out.println("\nGREEDY");
 
-        ResultadoGreedy greedy = servicios.greedy();
+        Greedy estrategiaIterativa = new Greedy(servicios.getPaquetesConAlimentos(), servicios.getPaquetesSinAlimentos(), servicios.getCamiones());
+        ResultadoGreedy greedy = estrategiaIterativa.greedy();
 
         System.out.println(greedy);
+
+        /*
+         * TEST BACKTRACKING
+         * Asignar paquetes a camiones mediante estrategia Backtracking
+         */
+        System.out.println("\nBACKTRACKING");
+
+        Backtracking estrategiaRecursiva = new Backtracking(servicios.getPaquetes(), servicios.getCamiones());
+        System.out.println(estrategiaRecursiva.backtracking());
     }
 }
