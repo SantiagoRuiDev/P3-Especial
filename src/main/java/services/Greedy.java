@@ -1,3 +1,5 @@
+package services;
+
 import models.Camion;
 import models.Paquete;
 import utils.ResultadoGreedy;
@@ -18,7 +20,7 @@ public class Greedy {
         this.camiones = camiones;
     }
 
-    // Estrategia Greedy elegida
+    // Estrategia services.Greedy elegida
     // El algoritmo implementa una estrategia pensada en optimizar el espacio disponible
     // Es decir, organizar las listas de paquetes (refrigerados/no refrig) de mayor a menor por peso.
     // Con la premisa de que los paquetes mas pesados seran ubicados, debido a la disponibilidad de espacio en los candidatos.

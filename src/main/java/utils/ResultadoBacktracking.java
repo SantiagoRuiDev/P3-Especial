@@ -2,53 +2,81 @@ package utils;
 
 import models.Paquete;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
- * Representa un estructura auxiliar para almacenar los resultados de la ejecución del algoritmo backtracking
+ * Representa una estructura auxiliar para almacenar los resultados
+ * de la ejecución del algoritmo de backtracking.
  */
 public class ResultadoBacktracking {
-    private HashMap<Integer, List<Paquete>> solucion;
-    private int pesoNoAsignadoKg;
-    private long estadosEvaluados;
 
-    public ResultadoBacktracking(HashMap<Integer, List<Paquete>> solucion, int pesoNoAsignadoKg, long estadosEvaluados) {
+    /**
+     * Mapa que contiene la relación entre el ID del camión y la lista de paquetes asignados.
+     */
+    private HashMap<Integer, List<Paquete>> solucion;
+
+    /**
+     * Sumatoria del peso en kilogramos de los paquetes que no pudieron ser asignados.
+     */
+    private int pesoNoAsignadoKg;
+
+    /**
+     * Contador de la cantidad de estados (nodos) explorados en el árbol de recursión.
+     */
+    private long estadosGenerados;
+
+    /**
+     * Constructor para guardar los resultados del algoritmo de backtracking.
+     *
+     * @param solucion asignación de paquetes por camión.
+     * @param pesoNoAsignadoKg peso sin asignar resultante de la mejor solución.
+     * @param estadosGenerados cantidad de estados o nodos explorados en el árbol.
+     */
+    public ResultadoBacktracking(HashMap<Integer, List<Paquete>> solucion, int pesoNoAsignadoKg, long estadosGenerados) {
         this.solucion = solucion;
         this.pesoNoAsignadoKg = pesoNoAsignadoKg;
-        this.estadosEvaluados = estadosEvaluados;
+        this.estadosGenerados = estadosGenerados;
     }
 
     /**
-     * Retorna la solución final de la asignación de paquetes luego de la ejecución del algoritmo
+     * Retorna el mapa de asignación de paquetes por camión de la solución óptima.
+     * @return Mapa con la solución obtenida.
      */
-    public HashMap<Integer, List<Paquete>> getSolucion() { return solucion; }
+    public HashMap<Integer, List<Paquete>> getSolucion() {
+        return solucion;
+    }
 
     /**
-     * Retorna el peso no asignado durante la ejecución
+     * Retorna el peso acumulado de aquellos paquetes que no fueron asignados.
+     * @return Peso en kilogramos no asignado.
      */
-    public int getPesoNoAsignadoKg() { return pesoNoAsignadoKg; }
+    public int getPesoNoAsignadoKg() {
+        return pesoNoAsignadoKg;
+    }
 
     /**
-     * Retorna la cantidad de estados evaluados durante la ejecución
+     * Retorna la cantidad de estados generados durante la búsqueda.
+     * @return Cantidad de estados explorados.
      */
-    public long getEstadosEvaluados() { return estadosEvaluados; }
+    public long getEstadosGenerados() {
+        return estadosGenerados;
+    }
 
+    /**
+     * Genera una representación en cadena de la solución y sus métricas.
+     * @return String con el formato requerido por la consigna.
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Solución obtenida:\n");
 
-        // Recorremos el mapa de la solución para listar cada camión y sus paquetes
         if (solucion == null || solucion.isEmpty()) {
             sb.append("  No se asignaron paquetes a ningún camión.\n");
         } else {
             for (Map.Entry<Integer, List<Paquete>> entrada : solucion.entrySet()) {
-                Integer idCamion = entrada.getKey();
+                sb.append("  -> Camión ID [").append(entrada.getKey()).append("]: ");
                 List<Paquete> paquetesAsignados = entrada.getValue();
-
-                sb.append("  -> Camión ID [").append(idCamion).append("]: ");
 
                 if (paquetesAsignados.isEmpty()) {
                     sb.append("Sin paquetes asignados.\n");
@@ -64,9 +92,9 @@ public class ResultadoBacktracking {
             }
         }
 
-        sb.append("\nMetricas:\n");
+        sb.append("\nMétricas:\n");
         sb.append("- Peso no asignado: ").append(pesoNoAsignadoKg).append(" kg.\n");
-        sb.append("- Estados evaluados: ").append(estadosEvaluados).append("\n");
+        sb.append("- Estados generados: ").append(estadosGenerados).append("\n");
         return sb.toString();
     }
 }
